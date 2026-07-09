@@ -5,6 +5,20 @@ import 'package:sz_core/src/widget.dart';
 import 'package:flutter/material.dart';
 
 class SZShow {
+  /// Displays a toast message to the user.
+  ///
+  /// The toast can be customized with background color, text color,
+  /// font size, and display duration.
+  ///
+  /// Returns the displayed message after the toast is shown.
+  ///
+  /// Example:
+  /// ```dart
+  /// await SZShow.toast(
+  ///   'Profile updated successfully',
+  ///   bg: Colors.green,
+  /// );
+  /// ```
   static Future<String?> toast(
     String message, {
     Color bg = Colors.green,
@@ -21,6 +35,29 @@ class SZShow {
     );
   }
 
+  /// Displays a customizable alert dialog.
+  ///
+  /// Supports one or two action buttons and optional custom content.
+  ///
+  /// By default:
+  /// - The first button text is `OK`.
+  /// - Clicking a button closes the dialog automatically.
+  ///
+  /// Use [buildContent] to add custom widgets inside the dialog.
+  ///
+  /// Example:
+  /// ```dart
+  /// SZShow.dialog(
+  ///   context,
+  ///   'Delete Item',
+  ///   'Are you sure you want to delete this item?',
+  ///   btn1: 'Cancel',
+  ///   btn2: 'Delete',
+  ///   b2Click: () {
+  ///     deleteItem();
+  ///   },
+  /// );
+  /// ```
   static void dialog(
     BuildContext context,
     String title,
@@ -127,6 +164,26 @@ class SZShow {
     );
   }
 
+  /// Opens a date picker dialog and returns the selected date.
+  ///
+  /// The selected date is returned as an [SPair]:
+  /// - `id` contains the server formatted date (`yyyy-MM-dd`)
+  /// - `name` contains the display formatted date (`d MMM yyyy`)
+  ///
+  /// Use the parameters to control whether past, current, or future
+  /// dates can be selected.
+  ///
+  /// Example:
+  /// ```dart
+  /// final date = await SZShow.dateSelect(
+  ///   context,
+  ///   null,
+  ///   futureAllow: true,
+  /// );
+  ///
+  ///  SZCore.printLog(date.id);   // 2026-07-09
+  ///  SZCore.printLog(date.name); // 9 Jul 2026
+  /// ```
   static Future<SPair> dateSelect(
     BuildContext context,
     SPair? selectedDate, {
@@ -158,6 +215,25 @@ class SZShow {
     }
   }
 
+
+  /// Opens a time picker dialog and returns the selected time.
+  ///
+  /// The selected time is returned as an [SPair]:
+  /// - `id` contains the server formatted time (`HH:mm:ss`)
+  /// - `name` contains the display formatted time (`h:mm a`)
+  ///
+  /// Use [futureAllow] and [pastAllow] to restrict selectable times.
+  ///
+  /// Example:
+  /// ```dart
+  /// final time = await SZShow.timeSelect(
+  ///   context,
+  ///   null,
+  /// );
+  ///
+  ///  SZCore.printLog(time.id);   // 14:30:00
+  ///  SZCore.printLog(time.name); // 2:30 PM
+  /// ```
   static Future<SPair> timeSelect(
     BuildContext context,
     SPair? selectedTime, {
@@ -189,6 +265,22 @@ class SZShow {
     }
   }
 
+
+  /// Opens a year picker dialog and returns the selected year.
+  ///
+  /// Use the parameters to control whether past, current, or future
+  /// years can be selected.
+  ///
+  /// Example:
+  /// ```dart
+  /// final year = await SZShow.yearSelect(
+  ///   context,
+  ///   DateTime.now().year,
+  ///   futureAllow: true,
+  /// );
+  ///
+  ///  SZCore.printLog(year); // 2026
+  /// ```
   static Future<int> yearSelect(
     BuildContext context,
     int selectedYear, {

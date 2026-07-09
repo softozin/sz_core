@@ -1,5 +1,5 @@
 name: sz_core
-description: "SZ Core Package"
+description: "SZ Core is a lightweight Flutter utility package that simplifies application development by providing Android-inspired activity navigation, screen management, responsive sizing utilities, and commonly used helper functions in a single package.It helps reduce boilerplate code and improves code consistency across Flutter applications, making development faster and easier to maintain."
 version: 2.0.0
 license: MIT
 
@@ -17,7 +17,7 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
 
-  url_launcher: ^6.0.3
+  url_launcher: ">=6.1.0"
   intl: ^0.20.2
   http: ^1.0.0
 

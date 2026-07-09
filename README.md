@@ -272,8 +272,8 @@ SZCore.hideKeyboard(context);
 ```dart
 final size = await SZCore.getScreenSize();
 
-print(size.width);
-print(size.height);
+ SZCore.printLog(size.width);
+ SZCore.printLog(size.height);
 ```
 
 ---
@@ -487,6 +487,131 @@ SPair time = await SZShow.timeSelect(
 int year = await SZShow.yearSelect(
   context,
   2025,
+);
+```
+
+---
+
+## Widgets
+
+### `SZText`
+
+A customizable text widget with support for icons, required indicators, shadows, and responsive font sizing.
+
+```dart
+const SZText(
+  'Welcome to SZ Core',
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
+const SZText(
+  'Email Address',
+  required: true,
+  icon: Icons.email,
+);
+```
+
+---
+
+### `SZButton`
+
+A customizable button with support for icons, colors, borders, and disabled states.
+
+```dart
+SZButton(
+  text: 'Login',
+  onClick: () {
+    login();
+  },
+);
+
+SZButton(
+  text: 'Delete',
+  icon: Icons.delete,
+  btnColor: Colors.red,
+  onClick: deleteItem,
+);
+```
+
+---
+
+### `SZIconButton`
+
+A compact icon button with support for custom widgets and long-click actions.
+
+```dart
+SZIconButton(
+  icon: Icons.edit,
+  onClick: () {
+    editProfile();
+  },
+);
+
+SZIconButton(
+  icon: Icons.delete,
+  bgColor: Colors.red,
+  onClick: deleteItem,
+  onLongClick: showDeleteConfirmation,
+);
+```
+
+---
+
+### `SZTextField`
+
+A customizable text field with support for icons, labels, password mode, and keyboard configuration.
+
+```dart
+SZTextField(
+  hint: 'Enter your name',
+  controller: nameController,
+);
+
+SZTextField(
+  hint: 'Password',
+  obscureText: true,
+  suffixIcon: Icons.visibility,
+);
+```
+
+---
+
+### `SZDropDown`
+
+A generic dropdown widget supporting any object type.
+
+```dart
+SZDropDown<Pair>(
+  true,
+  selectedCountry,
+  countries,
+  (value) {
+    setState(() {
+      selectedCountry = value;
+    });
+  },
+  toStringConvert: (item) => item.name,
+);
+```
+
+---
+
+### `SZAutoComplete`
+
+An autocomplete widget with asynchronous search support.
+
+```dart
+SZAutoComplete<Pair>(
+  isEnable: true,
+  value: selectedUser,
+  onSearch: (keyword) async {
+    return await searchUsers(keyword);
+  },
+  displayText: (item) => item.name,
+  onSelected: (item) {
+    selectedUser = item;
+  },
 );
 ```
 

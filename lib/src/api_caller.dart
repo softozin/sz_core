@@ -20,6 +20,38 @@ class SZApiSetting {
   static String keyInternet = "internet";
   static Map<String, String> defaultHeader = {};
 
+  /// Initializes SZ Core and configures global API settings.
+  ///
+  /// This method should be called once during application startup,
+  /// typically before `runApp()`.
+  ///
+  /// Parameters:
+  /// - [baseURL] : Base URL used for all API requests.
+  /// - [keyStatus] : JSON response key representing request status.
+  /// - [keyMessage] : JSON response key representing response message.
+  /// - [keyData] : JSON response key containing response data.
+  /// - [keyInternet] : Custom message used when internet connectivity is unavailable.
+  /// - [defaultHeader] : Default HTTP headers included with every request.
+  ///
+  /// Example:
+  /// ```dart
+  /// void main() async {
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///
+  ///   SZCore.init(
+  ///     'https://api.example.com',
+  ///     keyStatus: 'success',
+  ///     keyMessage: 'message',
+  ///     keyData: 'data',
+  ///     defaultHeader: {
+  ///       'Accept': 'application/json',
+  ///       'Content-Type': 'application/json',
+  ///     },
+  ///   );
+  ///
+  ///   runApp(const MyApp());
+  /// }
+  /// ```
   static void init(
     String baseURL, {
     String? keyStatus,
@@ -47,20 +79,104 @@ class SZApiSetting {
   }
 }
 
-enum SZMethod { get, post, delete, put, patch }
+/// Supported HTTP request methods used by SZ Core.
+///
+/// These methods are used when making API requests through the networking
+/// utilities provided by the package.
+///
+/// Example:
+/// ```dart
+/// await SZCore.request(
+///   method: SZMethod.post,
+///   url: '/login',
+///   body: {
+///     'email': email,
+///     'password': password,
+///   },
+/// );
+/// ```
+enum SZMethod {
+  /// Retrieves data from the server.
+  get,
 
+  /// Sends new data to the server.
+  post,
+
+  /// Removes existing data from the server.
+  delete,
+
+  /// Updates existing data by replacing it completely.
+  put,
+
+  /// Updates existing data partially.
+  patch,
+}
+
+/// A generic API caller used by SZ Core for performing HTTP requests.
+///
+/// Supports all common HTTP methods including GET, POST, PUT, PATCH,
+/// and DELETE.
+///
+/// The caller automatically handles:
+/// - Loading dialogs
+/// - Request logging
+/// - Session expiration detection
+/// - Keyboard dismissal
+/// - Network error handling
+/// - UTF-8 response decoding
+///
+/// Example:
+/// ```dart
+/// SZApiCaller(
+///   context,
+///   this,
+///   1,
+///   jsonEncode(data),
+///   'Please wait...',
+///   '/login',
+/// ).then((response, key) {
+///   // Handle response
+/// });
+/// ```
 class SZApiCaller<T extends SZBase> {
+  /// UTF-8 decoder used for decoding API responses.
   static final utf8 = const Utf8Decoder();
+
+  /// Current build context.
   final BuildContext? _context;
+
+  /// Request identifier returned in callbacks.
   final int _key;
+
+  /// API endpoint URL.
   final String _api;
+
+  /// Request body data.
   final String? _data;
+
+  /// Loading dialog message.
   final String? _dialogMsg;
+
+  /// Prevents keyboard hiding after request completion.
   final bool skipFocus;
+
+  /// Current activity instance.
   final T? activity;
+
+  /// Custom headers for this request.
   final Map<String, String>? customHeader;
+
+  /// HTTP request method.
   final SZMethod _szMethod;
 
+  /// Creates a new API request.
+  ///
+  /// Relative URLs are automatically prefixed with
+  /// `SZApiSetting.baseURL`.
+  ///
+  /// If [method] is not provided:
+  /// - `GET` is used when [_data] is `null`
+  /// - `POST` is used otherwise
   SZApiCaller(
     this._context,
     this.activity,
@@ -76,6 +192,10 @@ class SZApiCaller<T extends SZBase> {
     // init();
   }
 
+  /// Executes the API request and returns the response and request key.
+  ///
+  /// Returns `null` when the session has expired and logout processing
+  /// has been triggered.
   Future<({String response, int key})?> call() async {
     if (_dialogMsg != null) {
       if (activity != null) {
@@ -109,6 +229,9 @@ class SZApiCaller<T extends SZBase> {
     return (response: response, key: _key);
   }
 
+  /// Executes the request and delivers the result to [apiListener].
+  ///
+  /// This is a convenience wrapper around [call].
   void then(Function(String response, int key) apiListener) async {
     final d = await call();
     if (d != null) {
@@ -116,6 +239,10 @@ class SZApiCaller<T extends SZBase> {
     }
   }
 
+  /// Sends the HTTP request and returns the raw response body.
+  ///
+  /// Network and timeout exceptions are automatically converted into
+  /// a standardized JSON error response.
   Future<String> getRes() async {
     try {
       http.Response response;

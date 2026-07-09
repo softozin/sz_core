@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
 void main() {
   final pubspec = File('pubspec.yaml').readAsStringSync();
   final readmeFile = File('README.md');
@@ -24,5 +26,5 @@ void main() {
 
   readmeFile.writeAsStringSync(updated);
 
-  print('README updated to sz_core: ^$version');
+  debugPrint('README updated to sz_core: ^$version');
 }
