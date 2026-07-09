@@ -6,7 +6,7 @@ A lightweight Flutter package that provides reusable widgets, responsive sizing,
 
 - ✅ Responsive UI scaling (`.w`, `.h`, `.r`, `.sp`)
 - ✅ Base Activity & Fragment architecture
-- ✅ Built-in API caller (GET & POST)
+- ✅ Built-in API caller (GET,POST,PUT,PATCH & DELETE)
 - ✅ Toasts, dialogs & pickers
 - ✅ Navigation helper
 - ✅ Phone, Website & WhatsApp launcher
