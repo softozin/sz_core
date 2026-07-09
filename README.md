@@ -228,6 +228,8 @@ onPaused();
 
 ## Open Activity
 
+Open a new activity:
+
 ```dart
 await SZCore.open(
   context,
@@ -235,10 +237,14 @@ await SZCore.open(
 );
 ```
 
-### You can use below 2 parameter default value is false
+### Parameters
 
-bool finish = false, // when true finish current activity
-bool onlyOne = false, // when true finish all activity and open only one.
+| Parameter | Default | Description                                                                            |
+|-----------|---------|----------------------------------------------------------------------------------------|
+| `finish`  | `false` | Closes the current activity before opening the new activity.                           |
+| `onlyOne` | `false` | Clears all previous activities and opens the new activity as the only active activity. |
+
+### Example
 
 ```dart
 await SZCore.open(

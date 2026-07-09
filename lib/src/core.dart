@@ -62,8 +62,16 @@ class SZCore {
     return formatted;
   }
 
+  static String formattedDateTime(DateTime selectedDateTime, {bool server = true}) {
+    final intl.DateFormat formatter = intl.DateFormat(
+      server ? 'yyyy-MM-dd HH:mm:ss' : 'd MMM yyyy h:mm a',
+    );
+    final String formatted = formatter.format(selectedDateTime);
+    return formatted;
+  }
+
   static String formattedTime(DateTime selectedTime, {bool server = true}) {
-    final formatter = intl.DateFormat(server ? 'HH:mm' : 'h:mm a');
+    final formatter = intl.DateFormat(server ? 'HH:mm:ss' : 'h:mm a');
     return formatter.format(selectedTime);
   }
 

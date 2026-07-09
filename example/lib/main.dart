@@ -11,6 +11,9 @@ void main() {
     keyData: "data",//default data
     keyInternet: "internet",//default internet
   );
+
+  SZCore.printLog(SZCore.formattedTime(DateTime.timestamp(),server: false));
+  SZCore.printLog(SZCore.formattedTime(DateTime.timestamp()));
   runApp(const MyApp());
 }
 
