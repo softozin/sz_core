@@ -4,6 +4,39 @@ import 'package:sz_core/sz_core_platform_interface.dart';
 import 'package:sz_core/src/widget.dart';
 import 'package:flutter/material.dart';
 
+/// Provides common UI helper utilities for SZ Core.
+///
+/// `SZShow` contains reusable methods for displaying user interface
+/// elements such as:
+/// - Toast messages
+/// - Alert dialogs
+/// - Date picker
+/// - Time picker
+/// - Year picker
+///
+/// These utilities help maintain a consistent UI experience across
+/// Flutter applications.
+///
+/// Example:
+/// ```dart
+/// SZShow.toast(
+///   'Saved successfully',
+/// );
+///
+/// SZShow.dialog(
+///   context,
+///   'Confirmation',
+///   'Are you sure you want to continue?',
+/// );
+///
+/// final date = await SZShow.dateSelect(
+///   context,
+///   null,
+/// );
+/// ```
+///
+/// All methods are static and can be accessed directly without creating
+/// an instance of this class.
 class SZShow {
   /// Displays a toast message to the user.
   ///

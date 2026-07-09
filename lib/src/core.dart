@@ -9,11 +9,71 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
+/// Main utility class for SZ Core.
+///
+/// `SZCore` provides common application-level utilities including:
+/// - Package initialization
+/// - Navigation helpers
+/// - Screen size detection
+/// - Date and time formatting
+/// - Logging support
+/// - Device actions
+/// - Responsive size calculations
+/// - API configuration setup
+///
+/// Initialize SZ Core before using its features.
+///
+/// Example:
+/// ```dart
+/// void main() async {
+///   WidgetsFlutterBinding.ensureInitialized();
+///
+///   SZCore.init(
+///     'https://api.example.com',
+///   );
+///
+///   runApp(const MyApp());
+/// }
+/// ```
+///
+/// Most methods in this class are static and can be accessed directly:
+///
+/// ```dart
+/// SZCore.printLog('Application started');
+///
+/// final date = SZCore.formattedDate(DateTime.now());
+/// ```
 class SZCore {
+  /// Callback triggered when the user session expires.
+  ///
+  /// Assign this callback to handle logout actions globally,
+  /// such as clearing user data and navigating to the login screen.
+  ///
+  /// Example:
+  /// ```dart
+  /// SZCore.logoutCallback = () {
+  ///   Navigator.pushReplacementNamed(context, '/login');
+  /// };
+  /// ```
   static Function()? logoutCallback;
-  static double widthScale = 1;
-  static double heightScale = 1;
-  static double textScale = 1;
+
+  /// Internal responsive width scale factor.
+  ///
+  /// Used by SZ Core responsive extensions to calculate
+  /// widget widths based on the device screen size.
+  static double _widthScale = 1;
+
+  /// Internal responsive height scale factor.
+  ///
+  /// Used by SZ Core responsive extensions to calculate
+  /// widget heights based on the device screen size.
+  static double _heightScale = 1;
+
+  /// Internal responsive text scale factor.
+  ///
+  /// Used by SZ Core text scaling utilities to calculate
+  /// font sizes according to the device screen size.
+  static double _textScale = 1;
 
   /// Initializes SZ Core and configures global settings.
   ///
@@ -47,17 +107,17 @@ class SZCore {
     const designWidth = 360.0;
     const designHeight = 690.0;
 
-    widthScale = (size.width / designWidth);
-    heightScale = (size.height / designHeight);
+    _widthScale = (size.width / designWidth);
+    _heightScale = (size.height / designHeight);
 
     // widthScale = (1.0 + ((widthScale.floor() - 1) * 0.05)).clamp(0.85, 1.30);;
     // heightScale = (1.0 + ((heightScale.floor() - 1) * 0.05)).clamp(0.85, 1.30);;
 
-    textScale = min(widthScale, heightScale).clamp(0.85, 1.30);
+    _textScale = min(_widthScale, _heightScale).clamp(0.85, 1.30);
 
-    printLog("W : $widthScale");
-    printLog("H : $heightScale");
-    printLog("T : $textScale");
+    printLog("W : $_widthScale");
+    printLog("H : $_heightScale");
+    printLog("T : $_textScale");
   }
 
   /// Returns the physical screen size of the device.
@@ -429,20 +489,20 @@ extension SizeExtension on num {
   /// Returns the value scaled according to the screen width.
   ///
   /// Commonly used for widget widths and horizontal spacing.
-  double get w => this * SZCore.widthScale;
+  double get w => this * SZCore._widthScale;
 
   /// Returns the value scaled according to the screen height.
   ///
   /// Commonly used for widget heights and vertical spacing.
-  double get h => this * SZCore.heightScale;
+  double get h => this * SZCore._heightScale;
 
   /// Returns the value scaled using the average of width and height scales.
   ///
   /// Commonly used for border radius, icon sizes, and square dimensions.
-  double get r => this * ((SZCore.widthScale + SZCore.heightScale) / 2);
+  double get r => this * ((SZCore._widthScale + SZCore._heightScale) / 2);
 
   /// Returns the value scaled according to the text scale factor.
   ///
   /// Commonly used for font sizes.
-  double get sp => this * SZCore.textScale;
+  double get sp => this * SZCore._textScale;
 }

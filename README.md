@@ -40,7 +40,7 @@ Add the package to your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  sz_core: ^2.0.0
+  sz_core: ^2.0.1
 ```
 
 Then run

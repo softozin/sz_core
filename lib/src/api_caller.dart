@@ -9,15 +9,59 @@ import 'package:sz_core/src/core.dart';
 import 'package:sz_core/src/show.dart';
 import 'package:sz_core/src/widget.dart';
 
+
+/// Provides global API configuration settings for SZ Core.
+///
+/// `SZApiSetting` stores common API-related configurations such as:
+/// - Base API URL
+/// - Default request headers
+/// - Response key mappings
+/// - Network error messages
+/// - HTTP client configuration
+///
+/// Configure these settings before making API requests using
+/// [SZApiCaller].
+///
+/// Example:
+/// ```dart
+/// SZApiSetting.baseURL = 'https://api.example.com';
+///
+/// SZApiSetting.defaultHeader = {
+///   'Content-Type': 'application/json',
+///   'Accept': 'application/json',
+/// };
+///
+/// SZApiSetting.keyStatus = 'status';
+/// SZApiSetting.keyMessage = 'message';
+/// SZApiSetting.keyData = 'data';
+/// ```
+///
+/// These values are used automatically by SZ Core API utilities.
 class SZApiSetting {
+
+  /// Default Final Client
   static final http.Client client = http.Client();
+
+  /// Message returned when internet connection is unavailable.
   static String networkError =
       "Network is not available in your mobile at this location. Please go to network or try again when network is available.";
+
+  /// Base URL used for API requests.
   static String baseURL = "http://localhost/";
-  static String keyStatus = "status";
-  static String keyMessage = "message";
-  static String keyData = "data";
-  static String keyInternet = "internet";
+
+  /// JSON key used to identify API request status.
+  static String keyStatus = 'status';
+
+  /// JSON key used to read API response messages.
+  static String keyMessage = 'message';
+
+  /// JSON key used to read API response data.
+  static String keyData = 'data';
+
+  /// JSON key used to identify network-related errors.
+  static String keyInternet = 'internet';
+
+  /// Default headers added to every API request.
   static Map<String, String> defaultHeader = {};
 
   /// Initializes SZ Core and configures global API settings.
