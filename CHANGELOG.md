@@ -3,7 +3,9 @@
 ## 2.0.0
 
 - Update minor changes
-- 
+- Introduce More Widget
+- Add commented code
+
 ## 1.1.0
 
 - Update minor changes
