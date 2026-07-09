@@ -18,8 +18,11 @@ abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBin
     });
   }
 
-  Future<A?> open<A extends Widget>(A dyClass) {
-    return SZCore.open(context, dyClass);
+  Future<A?> open<A extends Widget>(A dyClass, {
+    bool finish = false,
+    bool onlyOne = false,
+  }) {
+    return SZCore.open(context, dyClass,finish: finish,onlyOne: onlyOne);
   }
 
   void onResume() {}

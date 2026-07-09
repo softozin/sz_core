@@ -107,11 +107,52 @@ class SZCore {
     FocusScope.of(context).requestFocus(FocusNode());
   }
 
-  static Future<T?> open<T extends Widget>(BuildContext context, T dyClass) {
-    return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => dyClass),
-    );
+  static Future<T?> open<T extends Widget>(
+    BuildContext context,
+    T dyClass, {
+    bool finish = false,
+    bool onlyOne = false,
+  }) {
+    if (onlyOne) {
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => dyClass),
+        (route) => false,
+      );
+    } else {
+      if (finish) {
+        Navigator.pop(context);
+      }
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => dyClass),
+      );
+    }
+  }
+
+  static Future openName<T extends Widget>(
+    BuildContext context,
+    String dyClass, {
+    bool finish = false,
+    bool onlyOne = false,
+  }) {
+    if (onlyOne) {
+      return Navigator.pushNamedAndRemoveUntil(
+        context,
+        dyClass,
+        // MaterialPageRoute(builder: (context) => dyClass),
+        (route) => false,
+      );
+    } else {
+      if (finish) {
+        Navigator.pop(context);
+      }
+      return Navigator.pushNamed(
+        context,
+        dyClass,
+        // MaterialPageRoute(builder: (context) => dyClass),
+      );
+    }
   }
 }
 

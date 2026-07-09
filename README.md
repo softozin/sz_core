@@ -173,6 +173,7 @@ class _HomeActivityState extends SZActivity<HomeActivity> {
 
 ```dart
 showDialog("Loading...");
+
 hideDialog();
 
 open(const SecondActivity());
@@ -211,6 +212,7 @@ class _HomeFragmentState extends SZFragment<HomeFragment> {
 
 ```dart
 showDialog("Loading...");
+
 hideDialog();
 
 open(const SecondActivity());
@@ -230,6 +232,20 @@ onPaused();
 await SZCore.open(
   context,
   const HomeActivity(),
+);
+```
+
+### You can use below 2 parameter default value is false
+
+bool finish = false, // when true finish current activity
+bool onlyOne = false, // when true finish all activity and open only one.
+
+```dart
+await SZCore.open(
+  context,
+  const HomeActivity(),
+  finish: true,
+  onlyOne: true,
 );
 ```
 
