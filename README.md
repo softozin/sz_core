@@ -1,5 +1,7 @@
 # SZ Core
 
+[![pub package](https://img.shields.io/pub/v/sz_core?style=for-the-badge)](https://pub.dev/packages/sz_core)
+
 A lightweight Flutter package that provides reusable widgets, responsive sizing, utility methods, dialogs, navigation helpers, and a simple API caller to speed up Flutter application development.
 
 ## Features
@@ -38,7 +40,7 @@ Add the package to your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  sz_core: ^1.0.9
+  sz_core: ^2.0.0
 ```
 
 Then run
