@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:sz_core/src/api_caller.dart';
 import 'package:sz_core/src/show.dart';
 import 'package:sz_core/sz_core_platform_interface.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' as ul;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
@@ -75,8 +75,8 @@ class SZCore {
 
   static Future<void> openCall(String number) async {
     final Uri callUri = Uri(scheme: 'tel', path: number);
-    if (await canLaunchUrl(callUri)) {
-      await launchUrl(callUri);
+    if (await ul.canLaunchUrl(callUri)) {
+      await ul.launchUrl(callUri);
     } else {
       SZShow.toast('Could not launch $number');
     }
@@ -85,7 +85,7 @@ class SZCore {
   static Future<void> openWebsite(String url) async {
     final Uri uri = Uri.parse(url);
     try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      await ul.launchUrl(uri, mode: ul.LaunchMode.externalApplication);
     } catch (e) {
       SZShow.toast('Could not launch $url');
     }
@@ -96,7 +96,7 @@ class SZCore {
       "https://wa.me/$phone?text=${Uri.encodeComponent(message)}",
     );
     try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      await ul.launchUrl(uri, mode: ul.LaunchMode.externalApplication);
     } catch (e) {
       SZShow.toast('Could not launch Whatsapp');
     }
