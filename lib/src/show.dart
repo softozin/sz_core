@@ -38,6 +38,9 @@ import 'package:flutter/material.dart';
 /// All methods are static and can be accessed directly without creating
 /// an instance of this class.
 class SZShow {
+  /// Prevents creating instances of [SZShow].
+  SZShow._();
+
   /// Displays a toast message to the user.
   ///
   /// The toast can be customized with background color, text color,

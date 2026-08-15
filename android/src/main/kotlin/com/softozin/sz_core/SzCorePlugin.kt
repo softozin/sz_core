@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.widget.TextView
+import android.os.Build
 
 /** SzCorePlugin */
 class SzCorePlugin :
@@ -81,6 +82,56 @@ class SzCorePlugin :
                 )
             )
 
+        }else if (call.method == "getDeviceInfo") {
+            val prefs = application.getSharedPreferences("sz_core", Context.MODE_PRIVATE)
+
+            val androidId = Settings.Secure.getString(
+                application.contentResolver,
+                Settings.Secure.ANDROID_ID
+            ).takeUnless { it.isNullOrBlank() }
+                ?: prefs.getString("device_id", null)
+                ?: UUID.randomUUID().toString().also {
+                    prefs.edit().putString("device_id", it).apply()
+                }
+
+            val packageInfo = application.packageManager.getPackageInfo(
+                application.packageName,
+                0
+            )
+
+            val appName = application.applicationInfo
+                .loadLabel(application.packageManager)
+                .toString()
+
+            val appVersion = packageInfo.versionName ?: "0.0.0"
+
+            val appBuild = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode.toString()
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toString()
+            }
+
+            val info = mapOf(
+                "platform" to "Android",
+                "app_name" to appName,
+                "app_version" to appVersion,
+                "app_build" to appBuild,
+
+                "manufacturer" to Build.MANUFACTURER,
+                "brand" to Build.BRAND,
+                "model" to Build.MODEL,
+                "device" to Build.DEVICE,
+                "product" to Build.PRODUCT,
+
+                "android_version" to Build.VERSION.RELEASE,
+                "sdk" to Build.VERSION.SDK_INT.toString(),
+
+                "abis" to Build.SUPPORTED_ABIS.joinToString(","),
+                "identifier" to androidId
+            )
+
+            result.success(info)
         } else {
             result.notImplemented()
         }

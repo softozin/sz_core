@@ -48,6 +48,36 @@ public class SzCorePlugin: NSObject, FlutterPlugin {
             "width": window.bounds.width,
             "height": window.bounds.height
           ])
+        case "getDeviceInfo":
+            let device = UIDevice.current
+            let bundle = Bundle.main
+
+            let appName =
+            bundle.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+                    ?? bundle.object(forInfoDictionaryKey: "CFBundleName") as? String
+                    ?? "Unknown"
+
+            let appVersion =
+            bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+                    ?? "0.0.0"
+
+            let appBuild =
+            bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+                    ?? "0"
+
+            let info: [String: String] = [
+                "platform": "iOS",
+                "app_name": appName,
+                "app_version": appVersion,
+                "app_build": appBuild,
+                "model": device.model,
+                "name": device.name,
+                "system_name": device.systemName,
+                "system_version": device.systemVersion,
+                "identifier": device.identifierForVendor?.uuidString ?? ""
+            ]
+
+            result(info)
     default:
       result(FlutterMethodNotImplemented)
     }

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:sz_core/src/core.dart';
 import 'package:sz_core/src/show.dart';
 import 'package:sz_core/src/widget.dart';
+import 'package:sz_core/sz_core_platform_interface.dart';
 
 
 /// Provides global API configuration settings for SZ Core.
@@ -38,6 +39,9 @@ import 'package:sz_core/src/widget.dart';
 ///
 /// These values are used automatically by SZ Core API utilities.
 class SZApiSetting {
+
+  /// Prevents creating instances of [SZApiSetting].
+  SZApiSetting._();
 
   /// Default Final Client
   static final http.Client client = http.Client();
@@ -244,6 +248,16 @@ class SZApiCaller<T extends SZBase> {
     if (_dialogMsg != null) {
       if (activity != null) {
         activity!.showDialog(_dialogMsg);
+      }
+    }
+
+    if(customHeader != null){
+      if(!(customHeader!.containsKey("User-Agent"))){
+        customHeader!.addAll(await SzCorePlatform.instance.getDefaultHeader());
+      }
+    }else{
+      if(!(SZApiSetting.defaultHeader.containsKey("User-Agent"))){
+        SZApiSetting.defaultHeader.addAll(await SzCorePlatform.instance.getDefaultHeader());
       }
     }
 

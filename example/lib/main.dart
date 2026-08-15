@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sz_core/sz_core.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SZCore.init();
   SZApiSetting.init(
@@ -14,6 +14,8 @@ void main() {
 
   SZCore.printLog(SZCore.formattedTime(DateTime.timestamp(),server: false));
   SZCore.printLog(SZCore.formattedTime(DateTime.timestamp()));
+  SZCore.printLog((await SZCore.getDeviceInfo()).toString());
+  SZCore.printLog((await SZCore.getDefaultHeader()).toString());
   runApp(const MyApp());
 }
 

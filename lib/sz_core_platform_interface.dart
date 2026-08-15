@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:sz_core/src/model.dart';
 
 import 'sz_core_method_channel.dart';
 
@@ -26,10 +27,20 @@ abstract class SzCorePlatform extends PlatformInterface {
   }
 
   Future<String?> showToast(String message,Color bg,Color color,double size,double duration) {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+    throw UnimplementedError('showToast() has not been implemented.');
   }
 
   Future<({double width, double height})> getScreenSize() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+    throw UnimplementedError('getScreenSize() has not been implemented.');
   }
+
+  Future<Map<String, String>> getDefaultHeader() {
+    throw UnimplementedError('getDefaultHeader() has not been implemented.');
+  }
+
+  Future<DeviceInfo> getDeviceInfo() {
+    throw UnimplementedError('getDeviceInfo() has not been implemented.');
+  }
+
+
 }

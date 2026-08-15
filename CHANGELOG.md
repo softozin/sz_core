@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.4
+
+- Update minor changes
+
+## 2.0.3
+
+- Update minor changes
+
+## 2.0.2
+
+- Update minor changes
+
+
 ## 2.0.1
 
 - Update minor changes

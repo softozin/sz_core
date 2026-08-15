@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:sz_core/src/api_caller.dart';
+import 'package:sz_core/src/model.dart';
 import 'package:sz_core/src/show.dart';
 import 'package:sz_core/sz_core_platform_interface.dart';
 import 'package:url_launcher/url_launcher.dart' as ul;
@@ -44,6 +45,9 @@ import 'package:intl/intl.dart' as intl;
 /// final date = SZCore.formattedDate(DateTime.now());
 /// ```
 class SZCore {
+  /// Prevents creating instances of [SZCore].
+  SZCore._();
+
   /// Callback triggered when the user session expires.
   ///
   /// Assign this callback to handle logout actions globally,
@@ -439,6 +443,27 @@ class SZCore {
         dyClass,
       );
     }
+  }
+
+
+  /// Retrieves complete device and application information.
+  ///
+  /// The information is obtained from the native platform
+  /// (Android/iOS) through [SzCorePlatform].
+  ///
+  /// Returns:
+  /// A [DeviceInfo] object containing application, platform,
+  /// operating system, and device details.
+  static Future<DeviceInfo> getDeviceInfo() async {
+    return SzCorePlatform.instance.getDeviceInfo();
+  }
+
+  /// Returns the default HTTP headers for API requests.
+  ///
+  /// The `User-Agent` is generated dynamically using the application
+  /// and device information retrieved from the native Android/iOS layer.
+  static Future<Map<String, String>> getDefaultHeader() async {
+    return SzCorePlatform.instance.getDefaultHeader();
   }
 }
 

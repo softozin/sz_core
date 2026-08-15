@@ -16,6 +16,9 @@ A lightweight Flutter package that provides reusable widgets, responsive sizing,
 - ✅ Date & Time formatting
 - ✅ Random Dark Color generator
 - ✅ Hex Color extension
+- ✅ Native Android & iOS device information
+- ✅ Application information
+- ✅ Dynamic User-Agent generation
 
 ---
 
@@ -40,7 +43,7 @@ Add the package to your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  sz_core: ^2.0.1
+  sz_core: ^2.0.4
 ```
 
 Then run
@@ -120,6 +123,116 @@ SZApiSetting.defaultHeader = {
 ```
 
 ---
+
+# Device Information
+
+`SZCore` provides native device and application information through Android and iOS platform channels.
+
+The `DeviceInfo` model contains application, operating system, device, and hardware information.
+
+## Get Device Information
+
+```dart
+final deviceInfo = await SZCore.getDeviceInfo();
+```
+
+Example:
+
+```dart
+final deviceInfo = await SZCore.getDeviceInfo();
+
+print(deviceInfo.appName);
+print(deviceInfo.appVersion);
+print(deviceInfo.appBuild);
+
+print(deviceInfo.platform);
+print(deviceInfo.osName);
+print(deviceInfo.osVersion);
+
+print(deviceInfo.model);
+print(deviceInfo.manufacturer);
+print(deviceInfo.brand);
+```
+
+## DeviceInfo Properties
+
+| Property | Description |
+|----------|-------------|
+| `platform` | Platform name, e.g. Android or iOS |
+| `appName` | Application display name |
+| `appVersion` | Application version |
+| `appBuild` | Application build number |
+| `model` | Device model |
+| `manufacturer` | Device manufacturer |
+| `brand` | Device brand |
+| `device` | Android device code name |
+| `product` | Android product name |
+| `osName` | Operating system name |
+| `osVersion` | Operating system version |
+| `sdk` | Android SDK/API level |
+| `abis` | Supported CPU architectures |
+| `deviceName` | User-visible device name |
+| `identifier` | Platform-provided identifier |
+
+### Example Output
+
+Android:
+
+```text
+Platform      : Android
+App Name      : My App
+App Version   : 1.2.0
+App Build     : 25
+Manufacturer  : Samsung
+Brand         : Samsung
+Model         : SM-S928B
+OS Name       : Android
+OS Version    : 15
+SDK           : 35
+ABIs          : arm64-v8a
+```
+
+iOS:
+
+```text
+Platform      : iOS
+App Name      : My App
+App Version   : 1.2.0
+App Build     : 25
+Model         : iPhone
+OS Name       : iOS
+OS Version    : 18.6
+```
+
+---
+
+# User-Agent
+
+`SZCore` can generate a dynamic `User-Agent` using the application and device information.
+
+```dart
+final headers = await SZCore.getDefaultHeader();
+```
+
+Example Android:
+
+```text
+My App/1.2.0 (Android 15; Samsung SM-S928B; Build 25)
+```
+
+Example iOS:
+
+```text
+My App/1.2.0 (iOS 18.6; iPhone; Build 25)
+```
+
+You can use the generated header with your API requests:
+
+```dart
+final headers = await SZCore.getDefaultHeader();
+
+print(headers["User-Agent"]);
+```
 
 # Responsive Size
 

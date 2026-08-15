@@ -202,6 +202,7 @@ abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBin
 /// }
 /// ```
 abstract class SZActivity<T extends StatefulWidget> extends SZBase<T> {
+
   /// Builds the activity layout.
   ///
   /// This implementation is final and should not be overridden.
@@ -343,22 +344,57 @@ class SZText extends StatelessWidget {
     this.height,
   });
 
+  /// Indicates whether the field is required.
+  ///
+  /// When enabled, a required indicator can be displayed with the text.
   final bool required;
+
+  /// Displays a fallback `N/A` value when the text is empty.
   final bool showNA;
+
+  /// Expands the widget to use the full available row width.
   final bool fullRow;
+
+  /// Text content displayed by the widget.
   final String text;
+
+  /// Font size of the displayed text.
   final double? fontSize;
+
+  /// Text color.
   final Color? color;
+
+  /// Font weight of the text.
   final FontWeight? fontWeight;
+
+  /// Maximum number of lines to display.
   final int? maxLine;
+
+  /// Text alignment within the available space.
   final TextAlign textAlign;
+
+  /// Text decoration such as underline or line-through.
   final TextDecoration decoration;
+
+  /// Shadow effects applied to the text.
   final List<Shadow>? shadows;
+
+  /// Optional icon displayed with the text.
   final IconData? icon;
+
+  /// Size of the optional icon.
   final double? iconSize;
+
+  /// Color of the optional icon.
   final Color? iconColor;
+
+  /// Color of the text decoration.
   final Color? decorationColor;
+
+  /// Line height of the text.
   final double? height;
+
+  /// Alignment of children when using a row layout.
   final CrossAxisAlignment crossAxisAlignment;
 
   @override
@@ -461,20 +497,53 @@ class SZButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 10),
   });
 
+  /// Optional icon displayed on the button.
   final IconData? icon;
+
+  /// Text displayed on the button.
   final String text;
+
+  /// Width of the button.
+  ///
+  /// Defaults to `double.infinity`.
   final double width;
+
+  /// Height of the button.
   final double? height;
+
+  /// Size of the optional icon.
   final double? iconSize;
+
+  /// Font size of the button text.
   final double? fontSize;
+
+  /// Font weight of the button text.
   final FontWeight fontWeight;
+
+  /// Color of the button text.
   final Color textColor;
+
+  /// Background color of the button.
   final Color? btnColor;
+
+  /// Color of the button icon.
   final Color? iconColor;
+
+  /// Border color of the button.
   final Color? borderColor;
+
+  /// Border radius of the button.
   final double? radius;
+
+  /// Internal padding of the button.
   final EdgeInsets padding;
+
+  /// Callback invoked when the button is clicked.
   final VoidCallback? onClick;
+
+  /// Determines whether the button is enabled.
+  ///
+  /// When `false`, the button is disabled.
   final bool? enable;
 
   @override
@@ -590,15 +659,37 @@ class SZIconButton extends StatelessWidget {
     this.onLongClick,
   }); //assert(icon == null || child==null,'any one needed from icon & child')
 
+  /// Border radius applied to the button.
   final BorderRadius borderRadius;
+
+  /// Icon displayed inside the button.
   final IconData? icon;
+
+  /// Custom widget displayed inside the button.
+  ///
+  /// Can be used instead of [icon] for custom button content.
   final Widget? widget;
+
+  /// Background color of the button.
   final Color? bgColor;
+
+  /// Callback invoked when the button is tapped.
   final VoidCallback? onClick;
+
+  /// Callback invoked when the button is long pressed.
   final VoidCallback? onLongClick;
+
+  /// Color applied to the icon or custom content.
   final Color color;
+
+  /// Size of the icon or button content.
   final double? size;
-  final EdgeInsets? padding, margin;
+
+  /// Internal spacing inside the button.
+  final EdgeInsets? padding;
+
+  /// External spacing around the button.
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -658,30 +749,6 @@ class SZIconButton extends StatelessWidget {
 /// );
 /// ```
 class SZTextField extends StatelessWidget {
-  final String hint;
-  final TextEditingController? controller;
-  final TextInputType inputType;
-  final TextInputAction? inputAction;
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
-  final bool isEnable;
-  final int maxLength;
-  final String? label;
-  final VoidCallback? onSuffixTap;
-  final bool isFocus;
-  final Color? fontColor;
-  final Color borderColor;
-  final bool isSelection;
-  final String? initialValue;
-  final bool obscureText;
-  final int? maxLines;
-  final int? minLines;
-  final EdgeInsets? contentPadding;
-  final TextCapitalization textCapitalization;
-  final FocusNode? focusNode;
-  final double? fontSize;
-  final bool readOnly;
-  final bool? showCursor;
 
   /// Creates an SZ Core text field widget.
   const SZTextField({
@@ -711,6 +778,82 @@ class SZTextField extends StatelessWidget {
     this.readOnly = false,
     this.showCursor,
   });
+
+  /// Hint text displayed when the field is empty.
+  final String hint;
+
+  /// Controller used to manage and retrieve the text value.
+  final TextEditingController? controller;
+
+  /// Keyboard input type for the text field.
+  final TextInputType inputType;
+
+  /// Action button displayed on the keyboard.
+  final TextInputAction? inputAction;
+
+  /// Optional icon displayed at the start of the text field.
+  final IconData? prefixIcon;
+
+  /// Optional icon displayed at the end of the text field.
+  final IconData? suffixIcon;
+
+  /// Determines whether the text field is enabled.
+  final bool isEnable;
+
+  /// Maximum number of characters allowed.
+  final int maxLength;
+
+  /// Optional label displayed above the text field.
+  final String? label;
+
+  /// Callback invoked when the suffix icon is tapped.
+  final VoidCallback? onSuffixTap;
+
+  /// Determines whether the text field can receive focus.
+  final bool isFocus;
+
+  /// Color of the entered text.
+  final Color? fontColor;
+
+  /// Border color of the text field.
+  final Color borderColor;
+
+  /// Determines whether text selection is enabled.
+  final bool isSelection;
+
+  /// Initial text value of the field.
+  ///
+  /// Do not use together with [controller].
+  final String? initialValue;
+
+  /// Hides the entered text.
+  ///
+  /// Useful for password fields.
+  final bool obscureText;
+
+  /// Maximum number of visible text lines.
+  final int? maxLines;
+
+  /// Minimum number of visible text lines.
+  final int? minLines;
+
+  /// Padding inside the text field.
+  final EdgeInsets? contentPadding;
+
+  /// Controls automatic capitalization behavior while typing.
+  final TextCapitalization textCapitalization;
+
+  /// Focus node used for custom focus management.
+  final FocusNode? focusNode;
+
+  /// Font size of the entered text.
+  final double? fontSize;
+
+  /// Makes the text field read-only.
+  final bool readOnly;
+
+  /// Controls the visibility of the text cursor.
+  final bool? showCursor;
 
   @override
   Widget build(BuildContext context) {
@@ -820,17 +963,6 @@ class SZTextField extends StatelessWidget {
 /// );
 /// ```
 class SZDropDown<T> extends StatelessWidget {
-  final bool isEnable;
-  final T? value;
-  final List<T> values;
-  final ValueChanged<T?>? onChanged;
-  final String Function(T value)? toStringConvert;
-  final Color? dropDownBgColor;
-  final Color? bgColor;
-  final Color? textColor;
-  final Color? borderColor;
-  final double? width;
-  final double? height;
 
   /// Creates an SZ Core dropdown widget.
   const SZDropDown(this.isEnable, this.value, this.values, this.onChanged,
@@ -841,6 +973,42 @@ class SZDropDown<T> extends StatelessWidget {
         this.textColor,
         this.height = 48,
         this.width});
+
+
+  /// Determines whether the dropdown is enabled.
+  final bool isEnable;
+
+  /// Currently selected dropdown value.
+  final T? value;
+
+  /// List of available dropdown options.
+  final List<T> values;
+
+  /// Callback invoked when the selected value changes.
+  final ValueChanged<T?>? onChanged;
+
+  /// Converts a dropdown item into display text.
+  ///
+  /// If not provided, the item's default `toString()` value is used.
+  final String Function(T value)? toStringConvert;
+
+  /// Background color of the dropdown menu.
+  final Color? dropDownBgColor;
+
+  /// Background color of the dropdown field.
+  final Color? bgColor;
+
+  /// Text color of the selected value and dropdown items.
+  final Color? textColor;
+
+  /// Border color of the dropdown field.
+  final Color? borderColor;
+
+  /// Width of the dropdown widget.
+  final double? width;
+
+  /// Height of the dropdown widget.
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -921,21 +1089,6 @@ class SZDropDown<T> extends StatelessWidget {
 /// );
 /// ```
 class SZAutoComplete<T extends Object> extends StatefulWidget {
-  final bool isEnable;
-  final T? value;
-  final Future<List<T>> Function(String keyword) onSearch;
-  final String Function(T item) displayText;
-  final ValueChanged<T>? onSelected;
-
-  final Color? dropDownBgColor;
-  final Color? bgColor;
-  final Color? textColor;
-  final Color? borderColor;
-
-  final double? fontSize;
-  final double? width;
-  final double height;
-  final String hintText;
 
   /// Creates an SZ Core autocomplete widget.
   const SZAutoComplete({
@@ -955,13 +1108,53 @@ class SZAutoComplete<T extends Object> extends StatefulWidget {
     this.hintText = "-- SELECT --",
   });
 
+  /// Determines whether the autocomplete field is enabled.
+  final bool isEnable;
+
+  /// Currently selected item.
+  final T? value;
+
+  /// Callback used to search items asynchronously based on the entered keyword.
+  final Future<List<T>> Function(String keyword) onSearch;
+
+  /// Converts an item into the text displayed in the autocomplete field.
+  final String Function(T item) displayText;
+
+  /// Callback invoked when an item is selected from the suggestion list.
+  final ValueChanged<T>? onSelected;
+
+  /// Background color of the suggestion dropdown.
+  final Color? dropDownBgColor;
+
+  /// Background color of the autocomplete field.
+  final Color? bgColor;
+
+  /// Text color of the input field and suggestions.
+  final Color? textColor;
+
+  /// Border color of the autocomplete field.
+  final Color? borderColor;
+
+  /// Font size of the displayed text.
+  final double? fontSize;
+
+  /// Width of the autocomplete widget.
+  final double? width;
+
+  /// Height of the autocomplete field.
+  final double height;
+
+  /// Hint text displayed when no item is selected.
+  final String hintText;
+
   @override
   State<SZAutoComplete<T>> createState() =>
       _SZAutoCompleteState<T>();
 }
 
-class _SZAutoCompleteState<T extends Object>
-    extends State<SZAutoComplete<T>> {
+
+/// A customizable autocomplete widget inner class _SZAutoCompleteState
+class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -1062,6 +1255,7 @@ class _SZAutoCompleteState<T extends Object>
   }
 }
 
+/// A customizable autocomplete widget inner class _SearchBottomSheet
 class _SearchBottomSheet<T extends Object> extends StatefulWidget {
   final Future<List<T>> Function(String keyword) onSearch;
   final String Function(T item) displayText;
@@ -1084,6 +1278,7 @@ class _SearchBottomSheet<T extends Object> extends StatefulWidget {
       _SearchBottomSheetState<T>();
 }
 
+/// A customizable autocomplete widget inner class _SearchBottomSheetState
 class _SearchBottomSheetState<T extends Object>
     extends State<_SearchBottomSheet<T>> {
   final TextEditingController _controller = TextEditingController();
