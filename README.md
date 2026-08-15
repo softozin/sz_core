@@ -43,7 +43,7 @@ Add the package to your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  sz_core: ^2.0.4
+  sz_core: ^2.0.5
 ```
 
 Then run
@@ -152,6 +152,8 @@ print(deviceInfo.osVersion);
 print(deviceInfo.model);
 print(deviceInfo.manufacturer);
 print(deviceInfo.brand);
+
+print(deviceInfo.identifier);//Android Device Id / IOS ID
 ```
 
 ## DeviceInfo Properties
@@ -190,6 +192,7 @@ OS Name       : Android
 OS Version    : 15
 SDK           : 35
 ABIs          : arm64-v8a
+identifier    : b3e32457fd3ec2a4
 ```
 
 iOS:
@@ -202,6 +205,7 @@ App Build     : 25
 Model         : iPhone
 OS Name       : iOS
 OS Version    : 18.6
+identifier    : 11112222222332
 ```
 
 ---

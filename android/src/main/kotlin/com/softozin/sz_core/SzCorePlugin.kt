@@ -12,6 +12,9 @@ import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.widget.TextView
 import android.os.Build
+import android.content.Context
+import android.provider.Settings
+import java.util.UUID
 
 /** SzCorePlugin */
 class SzCorePlugin :
