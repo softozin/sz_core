@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sz_core/src/core.dart';
+import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 
 /// Base activity class used by SZ Core.
 ///
@@ -777,6 +779,71 @@ class SZTextField extends StatelessWidget {
     this.fontSize,
     this.readOnly = false,
     this.showCursor,
+    this.isFilled = true,
+    this.bgColor = Colors.white,
+    this.disabledBgColor,
+
+    // TextFormField properties
+    this.groupId = EditableText,
+    this.forceErrorText,
+    this.decoration,
+    this.style,
+    this.strutStyle,
+    this.textDirection,
+    this.textAlign = TextAlign.start,
+    this.textAlignVertical,
+    this.autofocus = false,
+    this.obscuringCharacter = '•',
+    this.autocorrect = true,
+    this.smartDashesType,
+    this.smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLengthEnforcement,
+    this.expands = false,
+    this.onChanged,
+    this.onTap,
+    this.onTapAlwaysCalled = false,
+    this.onTapOutside,
+    this.onTapUpOutside,
+    this.onEditingComplete,
+    this.onFieldSubmitted,
+    this.onSaved,
+    this.validator,
+    this.errorBuilder,
+    this.inputFormatters,
+    this.ignorePointers,
+    this.cursorWidth = 2.0,
+    this.cursorHeight,
+    this.cursorRadius,
+    this.cursorColor,
+    this.cursorErrorColor,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.selectAllOnFocus,
+    this.selectionControls,
+    this.buildCounter,
+    this.scrollPhysics,
+    this.autofillHints,
+    this.autoValidateMode,
+    this.scrollController,
+    this.restorationId,
+    this.enableIMEPersonalizedLearning = true,
+    this.mouseCursor,
+    this.contextMenuBuilder,
+    this.spellCheckConfiguration,
+    this.magnifierConfiguration,
+    this.undoController,
+    this.onAppPrivateCommand,
+    this.cursorOpacityAnimates,
+    this.selectionHeightStyle,
+    this.selectionWidthStyle,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.contentInsertionConfiguration,
+    this.statesController,
+    this.clipBehavior = Clip.hardEdge,
+    this.stylusHandwritingEnabled =
+        EditableText.defaultStylusHandwritingEnabled,
+    this.hintLocales,
   });
 
   /// Hint text displayed when the field is empty.
@@ -855,6 +922,203 @@ class SZTextField extends StatelessWidget {
   /// Controls the visibility of the text cursor.
   final bool? showCursor;
 
+  /// Controls the filled of the bg color.
+  final bool? isFilled;
+
+  /// Background color of the textFiled.
+  final Color? bgColor;
+
+  /// Disabled Background color of the textFiled.
+  final Color? disabledBgColor;
+
+
+
+
+  // ============================================================
+  // TEXT FORM FIELD PROPERTIES
+  // ============================================================
+
+  /// Group ID used by the text editing system.
+  final Object groupId;
+
+  /// Forces an error message regardless of validator result.
+  final String? forceErrorText;
+
+  /// Additional decoration applied to the field.
+  ///
+  /// SZ Core decoration values such as hint, label, prefix and suffix
+  /// take precedence where appropriate.
+  final InputDecoration? decoration;
+
+  /// Text style of the field.
+  final TextStyle? style;
+
+  /// Strut style used for text layout.
+  final StrutStyle? strutStyle;
+
+  /// Text direction.
+  final TextDirection? textDirection;
+
+  /// Text alignment.
+  final TextAlign textAlign;
+
+  /// Vertical text alignment.
+  final TextAlignVertical? textAlignVertical;
+
+  /// Automatically focuses the field.
+  final bool autofocus;
+
+  /// Character used to obscure password text.
+  final String obscuringCharacter;
+
+  /// Enables autocorrect.
+  final bool autocorrect;
+
+  /// Smart dash behavior.
+  final SmartDashesType? smartDashesType;
+
+  /// Smart quote behavior.
+  final SmartQuotesType? smartQuotesType;
+
+  /// Enables keyboard suggestions.
+  final bool enableSuggestions;
+
+  /// Controls max length enforcement.
+  final MaxLengthEnforcement? maxLengthEnforcement;
+
+  /// Whether the field expands vertically.
+  final bool expands;
+
+  /// Called whenever the text changes.
+  final ValueChanged<String>? onChanged;
+
+  /// Called when the field is tapped.
+  final GestureTapCallback? onTap;
+
+  /// Whether onTap is called for every tap.
+  final bool onTapAlwaysCalled;
+
+  /// Called when tapping outside the field.
+  final TapRegionCallback? onTapOutside;
+
+  /// Called when releasing a tap outside the field.
+  final TapRegionUpCallback? onTapUpOutside;
+
+  /// Called when editing is complete.
+  final VoidCallback? onEditingComplete;
+
+  /// Called when the keyboard action is submitted.
+  final ValueChanged<String>? onFieldSubmitted;
+
+  /// Called when the form is saved.
+  final FormFieldSetter<String>? onSaved;
+
+  /// Validates the field.
+  final FormFieldValidator<String>? validator;
+
+  /// Custom error widget builder.
+  final FormFieldErrorBuilder? errorBuilder;
+
+  /// Input formatters.
+  final List<TextInputFormatter>? inputFormatters;
+
+  /// Whether the field ignores pointer events.
+  final bool? ignorePointers;
+
+  /// Cursor width.
+  final double cursorWidth;
+
+  /// Cursor height.
+  final double? cursorHeight;
+
+  /// Cursor radius.
+  final Radius? cursorRadius;
+
+  /// Cursor color.
+  final Color? cursorColor;
+
+  /// Cursor color when the field has an error.
+  final Color? cursorErrorColor;
+
+  /// Keyboard appearance.
+  final Brightness? keyboardAppearance;
+
+  /// Padding around the field when scrolling into view.
+  final EdgeInsets scrollPadding;
+
+  /// Whether all text is selected when the field receives focus.
+  final bool? selectAllOnFocus;
+
+  /// Custom text selection controls.
+  final TextSelectionControls? selectionControls;
+
+  /// Custom counter builder.
+  final InputCounterWidgetBuilder? buildCounter;
+
+  /// Scroll physics.
+  final ScrollPhysics? scrollPhysics;
+
+  /// Autofill hints.
+  final Iterable<String>? autofillHints;
+
+  /// Form auto validation mode.
+  final AutovalidateMode? autoValidateMode;
+
+  /// Scroll controller.
+  final ScrollController? scrollController;
+
+  /// Restoration ID.
+  final String? restorationId;
+
+  /// Enables IME personalized learning.
+  final bool enableIMEPersonalizedLearning;
+
+  /// Mouse cursor.
+  final MouseCursor? mouseCursor;
+
+  /// Context menu builder.
+  final EditableTextContextMenuBuilder? contextMenuBuilder;
+
+  /// Spell check configuration.
+  final SpellCheckConfiguration? spellCheckConfiguration;
+
+  /// Text magnifier configuration.
+  final TextMagnifierConfiguration? magnifierConfiguration;
+
+  /// Undo history controller.
+  final UndoHistoryController? undoController;
+
+  /// Handles platform private commands.
+  final AppPrivateCommandCallback? onAppPrivateCommand;
+
+  /// Controls cursor opacity animation.
+  final bool? cursorOpacityAnimates;
+
+  /// Selection height style.
+  final ui.BoxHeightStyle? selectionHeightStyle;
+
+  /// Selection width style.
+  final ui.BoxWidthStyle? selectionWidthStyle;
+
+  /// Drag start behavior.
+  final DragStartBehavior dragStartBehavior;
+
+  /// Handles content insertion.
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+
+  /// Material states controller.
+  final WidgetStatesController? statesController;
+
+  /// Clip behavior.
+  final Clip clipBehavior;
+
+  /// Enables stylus handwriting.
+  final bool stylusHandwritingEnabled;
+
+  /// Locales used for keyboard hints.
+  final List<Locale>? hintLocales;
+
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -901,11 +1165,11 @@ class SZTextField extends StatelessWidget {
           color: Colors.blueGrey,
           fontWeight: FontWeight.w600,
         ),
-        filled: true,
+        filled: isFilled,
         // disabledBorder: OutlineInputBorder(
         //     borderSide: BorderSide(color: borderColor),
         //     borderRadius: BorderRadius.circular(8)),
-        fillColor: isEnable ? Colors.white : Colors.blueGrey.shade100,
+        fillColor: isEnable ? bgColor : (disabledBgColor??Colors.blueGrey.shade100),
         // enabledBorder: OutlineInputBorder(
         //     borderSide: BorderSide(color: borderColor),
         //     borderRadius: BorderRadius.circular(8)),
@@ -922,6 +1186,138 @@ class SZTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+
+
+
+
+      // ============================================================
+      // TextFormField properties
+      // ============================================================
+
+      groupId: groupId,
+
+      forceErrorText: forceErrorText,
+
+      strutStyle: strutStyle,
+
+      textDirection: textDirection,
+
+      textAlign: textAlign,
+
+      textAlignVertical: textAlignVertical,
+
+      autofocus: autofocus,
+
+      obscuringCharacter: obscuringCharacter,
+
+      autocorrect: autocorrect,
+
+      smartDashesType: smartDashesType,
+
+      smartQuotesType: smartQuotesType,
+
+      enableSuggestions: enableSuggestions,
+
+      maxLengthEnforcement: maxLengthEnforcement,
+
+      expands: expands,
+
+      onChanged: onChanged,
+
+      onTap: onTap,
+
+      onTapAlwaysCalled: onTapAlwaysCalled,
+
+      onTapOutside: onTapOutside,
+
+      onTapUpOutside: onTapUpOutside,
+
+      onEditingComplete: onEditingComplete,
+
+      onFieldSubmitted: onFieldSubmitted,
+
+      onSaved: onSaved,
+
+      validator: validator,
+
+      errorBuilder: errorBuilder,
+
+      enabled: isEnable,
+
+      ignorePointers: ignorePointers,
+
+      cursorWidth: cursorWidth,
+
+      cursorHeight: cursorHeight,
+
+      cursorRadius: cursorRadius,
+
+      cursorErrorColor: cursorErrorColor,
+
+      keyboardAppearance: keyboardAppearance,
+
+      scrollPadding: scrollPadding,
+
+      selectAllOnFocus: selectAllOnFocus,
+
+      selectionControls: selectionControls,
+
+      buildCounter: buildCounter,
+
+      scrollPhysics: scrollPhysics,
+
+      autofillHints: autofillHints,
+
+      autovalidateMode: autoValidateMode,
+
+      scrollController: scrollController,
+
+      restorationId: restorationId,
+
+      enableIMEPersonalizedLearning:
+      enableIMEPersonalizedLearning,
+
+      mouseCursor: mouseCursor,
+
+      contextMenuBuilder: contextMenuBuilder,
+
+      spellCheckConfiguration:
+      spellCheckConfiguration,
+
+      magnifierConfiguration:
+      magnifierConfiguration,
+
+      undoController: undoController,
+
+      onAppPrivateCommand:
+      onAppPrivateCommand,
+
+      cursorOpacityAnimates:
+      cursorOpacityAnimates,
+
+      selectionHeightStyle:
+      selectionHeightStyle,
+
+      selectionWidthStyle:
+      selectionWidthStyle,
+
+      dragStartBehavior:
+      dragStartBehavior,
+
+      contentInsertionConfiguration:
+      contentInsertionConfiguration,
+
+      statesController:
+      statesController,
+
+      clipBehavior:
+      clipBehavior,
+
+      stylusHandwritingEnabled:
+      stylusHandwritingEnabled,
+
+      hintLocales:
+      hintLocales,
     );
   }
 }
