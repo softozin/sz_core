@@ -40,18 +40,21 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(
-          child: InkWell(
-            onTap: () async {
-              var a = await SZCore.getScreenSize();
-              text = "${a.height}X${a.width}";
-              setState(() {
-                count++;
-              });
-              SZShow.toast("Test $count");
-            },
-            child: Text('COUNT : $count\n\n$text'),
-          ),
+        body: Column(
+          children: [
+            InkWell(
+              onTap: () async {
+                var a = await SZCore.getScreenSize();
+                text = "${a.height}X${a.width}";
+                setState(() {
+                  count++;
+                });
+                SZShow.toast("Test $count");
+              },
+              child: Text('COUNT : $count\n\n$text'),
+            ),
+            SZTextField(hint: "Test",bgColor: Colors.green,),
+          ],
         ),
       ),
     );

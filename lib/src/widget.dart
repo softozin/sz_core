@@ -1185,6 +1185,12 @@ class SZTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: isEnable ? borderColor : Colors.blueGrey,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
 
 
