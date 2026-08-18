@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sz_core/sz_core.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SZCore.init();
   SZApiSetting.init(
     "",
-    keyStatus: "status",//default status
-    keyMessage: "message",//default message
-    keyData: "data",//default data
-    keyInternet: "internet",//default internet
+    keyStatus: "status", //default status
+    keyMessage: "message", //default message
+    keyData: "data", //default data
+    keyInternet: "internet", //default internet
   );
 
-  SZCore.printLog(SZCore.formattedTime(DateTime.timestamp(),server: false));
+  SZCore.printLog(SZCore.formattedTime(DateTime.timestamp(), server: false));
   SZCore.printLog(SZCore.formattedTime(DateTime.timestamp()));
   SZCore.printLog((await SZCore.getDeviceInfo()).toString());
   SZCore.printLog((await SZCore.getDefaultHeader()).toString());
@@ -40,21 +40,30 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Plugin example app')),
-        body: Column(
-          children: [
-            InkWell(
-              onTap: () async {
-                var a = await SZCore.getScreenSize();
-                text = "${a.height}X${a.width}";
-                setState(() {
-                  count++;
-                });
-                SZShow.toast("Test $count");
-              },
-              child: Text('COUNT : $count\n\n$text'),
-            ),
-            SZTextField(hint: "Test",bgColor: Colors.green,borderRadius: 25,borderWidth: 0.1,),
-          ],
+        body: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () async {
+                  var a = await SZCore.getScreenSize();
+                  text = "${a.height}X${a.width}";
+                  setState(() {
+                    count++;
+                  });
+                  SZShow.toast("Test $count");
+                },
+                child: Text('COUNT : $count\n\n$text'),
+              ),
+              SZTextField(
+                hint: "Test",
+                bgColor: Colors.white,
+                borderWidth: 0.1,
+                suffixIcon: Icons.lock,
+                height: 38.h,
+              ),
+            ],
+          ),
         ),
       ),
     );

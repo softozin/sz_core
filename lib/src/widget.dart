@@ -40,8 +40,8 @@ import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 ///   }
 /// }
 /// ```
-abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBindingObserver {
-
+abstract class SZBase<T extends StatefulWidget> extends State<T>
+    with WidgetsBindingObserver {
   /// Current loading dialog message.
   String? _dialogMsg;
 
@@ -80,11 +80,12 @@ abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBin
   ///   onlyOne: true,
   /// );
   /// ```
-  Future<A?> open<A extends Widget>(A dyClass, {
+  Future<A?> open<A extends Widget>(
+    A dyClass, {
     bool finish = false,
     bool onlyOne = false,
   }) {
-    return SZCore.open(context, dyClass,finish: finish,onlyOne: onlyOne);
+    return SZCore.open(context, dyClass, finish: finish, onlyOne: onlyOne);
   }
 
   /// Called when the activity becomes visible or the app resumes.
@@ -138,7 +139,6 @@ abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBin
       onPaused();
     }
   }
-
 
   /// Builds the main content of the activity.
   ///
@@ -204,7 +204,6 @@ abstract class SZBase<T extends StatefulWidget> extends State<T> with WidgetsBin
 /// }
 /// ```
 abstract class SZActivity<T extends StatefulWidget> extends SZBase<T> {
-
   /// Builds the activity layout.
   ///
   /// This implementation is final and should not be overridden.
@@ -478,7 +477,6 @@ class SZText extends StatelessWidget {
 /// );
 /// ```
 class SZButton extends StatelessWidget {
-
   /// Creates an SZ Core button widget.
   const SZButton({
     super.key,
@@ -722,7 +720,6 @@ class SZIconButton extends StatelessWidget {
   }
 }
 
-
 /// A customizable text input widget used throughout SZ Core.
 ///
 /// `SZTextField` provides a simplified and consistent text field
@@ -751,11 +748,12 @@ class SZIconButton extends StatelessWidget {
 /// );
 /// ```
 class SZTextField extends StatelessWidget {
-
   /// Creates an SZ Core text field widget.
   const SZTextField({
     super.key,
     required this.hint,
+    this.height,
+    this.width,
     this.inputAction,
     this.inputType = TextInputType.text,
     this.controller,
@@ -777,6 +775,7 @@ class SZTextField extends StatelessWidget {
     this.initialValue,
     this.focusNode,
     this.fontSize,
+    this.iconSize,
     this.readOnly = false,
     this.showCursor,
     this.isFilled = true,
@@ -848,6 +847,12 @@ class SZTextField extends StatelessWidget {
         EditableText.defaultStylusHandwritingEnabled,
     this.hintLocales,
   });
+
+  /// height of text field.
+  final double? height;
+
+  /// width of text field.
+  final double? width;
 
   /// Hint text displayed when the field is empty.
   final String hint;
@@ -928,6 +933,9 @@ class SZTextField extends StatelessWidget {
   /// Font size of the entered text.
   final double? fontSize;
 
+  /// Font size of the entered icon.
+  final double? iconSize;
+
   /// Makes the text field read-only.
   final bool readOnly;
 
@@ -942,9 +950,6 @@ class SZTextField extends StatelessWidget {
 
   /// Disabled Background color of the textFiled.
   final Color? disabledBgColor;
-
-
-
 
   // ============================================================
   // TEXT FORM FIELD PROPERTIES
@@ -1130,7 +1135,6 @@ class SZTextField extends StatelessWidget {
   /// Locales used for keyboard hints.
   final List<Locale>? hintLocales;
 
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -1156,19 +1160,41 @@ class SZTextField extends StatelessWidget {
       inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
       decoration: InputDecoration(
         labelText: label,
+        constraints: BoxConstraints(
+          minHeight: height ?? 35.h,
+          maxHeight: height ?? 35.h,
+          minWidth: width ?? 0,
+          maxWidth: width ?? double.infinity,
+        ),
         labelStyle: TextStyle(
           color: Colors.blueGrey,
           fontWeight: FontWeight.w600,
         ),
         enabled: isEnable,
+        prefixIconConstraints: BoxConstraints(minWidth: 1),
         prefixIcon: prefixIcon == null
             ? null
-            : Icon(prefixIcon, color: Colors.blueGrey),
+            : Padding(
+                padding: EdgeInsets.only(left: 15.w, right: 5.w),
+                child: Icon(
+                  prefixIcon,
+                  color: Colors.blueGrey,
+                  size: iconSize ?? ((fontSize ?? 12.sp) * 1.3),
+                ),
+              ),
+        suffixIconConstraints: BoxConstraints(minWidth: 1),
         suffixIcon: suffixIcon == null
             ? null
             : InkWell(
                 onTap: onSuffixTap,
-                child: Icon(suffixIcon, color: Colors.blueGrey),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5.w, right: 15.w),
+                  child: Icon(
+                    suffixIcon,
+                    color: Colors.blueGrey,
+                    size: iconSize ?? ((fontSize ?? 12.sp) * 1.3),
+                  ),
+                ),
               ),
         contentPadding:
             contentPadding ?? EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -1181,7 +1207,9 @@ class SZTextField extends StatelessWidget {
         // disabledBorder: OutlineInputBorder(
         //     borderSide: BorderSide(color: borderColor),
         //     borderRadius: BorderRadius.circular(8)),
-        fillColor: isEnable ? bgColor : (disabledBgColor??Colors.blueGrey.shade100),
+        fillColor: isEnable
+            ? bgColor
+            : (disabledBgColor ?? Colors.blueGrey.shade100),
         // enabledBorder: OutlineInputBorder(
         //     borderSide: BorderSide(color: borderColor),
         //     borderRadius: BorderRadius.circular(8)),
@@ -1190,31 +1218,30 @@ class SZTextField extends StatelessWidget {
             color: isEnable ? borderColor : Colors.blueGrey,
             width: borderWidth,
           ),
-          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
+          borderRadius:
+              borderRadiusCustom ?? BorderRadius.circular(borderRadius),
         ),
         border: OutlineInputBorder(
           borderSide: BorderSide(
             color: isEnable ? borderColor : Colors.blueGrey,
             width: borderWidth,
           ),
-          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
+          borderRadius:
+              borderRadiusCustom ?? BorderRadius.circular(borderRadius),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: isEnable ? borderColor : Colors.blueGrey,
             width: borderWidth,
           ),
-          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
+          borderRadius:
+              borderRadiusCustom ?? BorderRadius.circular(borderRadius),
         ),
       ),
-
-
-
 
       // ============================================================
       // TextFormField properties
       // ============================================================
-
       groupId: groupId,
 
       forceErrorText: forceErrorText,
@@ -1295,55 +1322,40 @@ class SZTextField extends StatelessWidget {
 
       restorationId: restorationId,
 
-      enableIMEPersonalizedLearning:
-      enableIMEPersonalizedLearning,
+      enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
 
       mouseCursor: mouseCursor,
 
       contextMenuBuilder: contextMenuBuilder,
 
-      spellCheckConfiguration:
-      spellCheckConfiguration,
+      spellCheckConfiguration: spellCheckConfiguration,
 
-      magnifierConfiguration:
-      magnifierConfiguration,
+      magnifierConfiguration: magnifierConfiguration,
 
       undoController: undoController,
 
-      onAppPrivateCommand:
-      onAppPrivateCommand,
+      onAppPrivateCommand: onAppPrivateCommand,
 
-      cursorOpacityAnimates:
-      cursorOpacityAnimates,
+      cursorOpacityAnimates: cursorOpacityAnimates,
 
-      selectionHeightStyle:
-      selectionHeightStyle,
+      selectionHeightStyle: selectionHeightStyle,
 
-      selectionWidthStyle:
-      selectionWidthStyle,
+      selectionWidthStyle: selectionWidthStyle,
 
-      dragStartBehavior:
-      dragStartBehavior,
+      dragStartBehavior: dragStartBehavior,
 
-      contentInsertionConfiguration:
-      contentInsertionConfiguration,
+      contentInsertionConfiguration: contentInsertionConfiguration,
 
-      statesController:
-      statesController,
+      statesController: statesController,
 
-      clipBehavior:
-      clipBehavior,
+      clipBehavior: clipBehavior,
 
-      stylusHandwritingEnabled:
-      stylusHandwritingEnabled,
+      stylusHandwritingEnabled: stylusHandwritingEnabled,
 
-      hintLocales:
-      hintLocales,
+      hintLocales: hintLocales,
     );
   }
 }
-
-
 
 /// A customizable generic dropdown widget used throughout SZ Core.
 ///
@@ -1380,17 +1392,21 @@ class SZTextField extends StatelessWidget {
 /// );
 /// ```
 class SZDropDown<T> extends StatelessWidget {
-
   /// Creates an SZ Core dropdown widget.
-  const SZDropDown(this.isEnable, this.value, this.values, this.onChanged,
-      {super.key, this.toStringConvert,
-        this.dropDownBgColor,
-        this.bgColor,
-        this.borderColor,
-        this.textColor,
-        this.height = 48,
-        this.width});
-
+  const SZDropDown(
+    this.isEnable,
+    this.value,
+    this.values,
+    this.onChanged, {
+    super.key,
+    this.toStringConvert,
+    this.dropDownBgColor,
+    this.bgColor,
+    this.borderColor,
+    this.textColor,
+    this.height = 48,
+    this.width,
+  });
 
   /// Determines whether the dropdown is enabled.
   final bool isEnable;
@@ -1449,21 +1465,24 @@ class SZDropDown<T> extends StatelessWidget {
         ),
         isExpanded: true,
         value: value,
-        hint: SZText("-- SELECT --",
+        hint: SZText(
+          "-- SELECT --",
           color: textColor ?? Theme.of(context).primaryColorLight,
           fontWeight: FontWeight.w600,
           fontSize: 12,
         ),
         style: TextStyle(
-            color: textColor ?? Theme.of(context).primaryColorLight,
-            fontSize: 12,
-            fontWeight: FontWeight.w400),
+          color: textColor ?? Theme.of(context).primaryColorLight,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
         underline: const SizedBox(),
         onChanged: isEnable ? onChanged : null,
         items: values.map<DropdownMenuItem<T>>((T value) {
           return DropdownMenuItem<T>(
             value: value,
-            child: SZText(toStringConvert != null
+            child: SZText(
+              toStringConvert != null
                   ? toStringConvert!(value)
                   : value.toString(),
               color: textColor ?? Theme.of(context).primaryColorLight,
@@ -1476,7 +1495,6 @@ class SZDropDown<T> extends StatelessWidget {
     );
   }
 }
-
 
 /// A customizable autocomplete widget with asynchronous search support.
 ///
@@ -1506,7 +1524,6 @@ class SZDropDown<T> extends StatelessWidget {
 /// );
 /// ```
 class SZAutoComplete<T extends Object> extends StatefulWidget {
-
   /// Creates an SZ Core autocomplete widget.
   const SZAutoComplete({
     super.key,
@@ -1565,10 +1582,8 @@ class SZAutoComplete<T extends Object> extends StatefulWidget {
   final String hintText;
 
   @override
-  State<SZAutoComplete<T>> createState() =>
-      _SZAutoCompleteState<T>();
+  State<SZAutoComplete<T>> createState() => _SZAutoCompleteState<T>();
 }
-
 
 /// A customizable autocomplete widget inner class _SZAutoCompleteState
 class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
@@ -1603,7 +1618,7 @@ class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
         onSearch: widget.onSearch,
         displayText: widget.displayText,
         title: widget.hintText,
-        text:  _controller.text,
+        text: _controller.text,
         dropDownBgColor: widget.dropDownBgColor,
         textColor: widget.textColor,
       ),
@@ -1629,10 +1644,7 @@ class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
         onTap: widget.isEnable ? _openSearchSheet : null,
         child: Container(
           height: widget.height,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 3,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           decoration: BoxDecoration(
             color: widget.isEnable
                 ? (widget.bgColor ?? Colors.white)
@@ -1646,15 +1658,13 @@ class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
             children: [
               Expanded(
                 child: Text(
-                  _controller.text.isEmpty
-                      ? widget.hintText
-                      : _controller.text,
+                  _controller.text.isEmpty ? widget.hintText : _controller.text,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: _controller.text.isEmpty
                         ? Colors.grey
                         : (widget.textColor ??
-                        Theme.of(context).primaryColorLight),
+                              Theme.of(context).primaryColorLight),
                     fontSize: widget.fontSize,
                     fontWeight: FontWeight.w500,
                   ),
@@ -1691,8 +1701,7 @@ class _SearchBottomSheet<T extends Object> extends StatefulWidget {
   });
 
   @override
-  State<_SearchBottomSheet<T>> createState() =>
-      _SearchBottomSheetState<T>();
+  State<_SearchBottomSheet<T>> createState() => _SearchBottomSheetState<T>();
 }
 
 /// A customizable autocomplete widget inner class _SearchBottomSheetState
@@ -1739,9 +1748,7 @@ class _SearchBottomSheetState<T extends Object>
       height: MediaQuery.of(context).size.height * .75,
       decoration: BoxDecoration(
         color: widget.dropDownBgColor ?? Colors.white,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SafeArea(
         top: false,
@@ -1761,9 +1768,7 @@ class _SearchBottomSheetState<T extends Object>
             const SizedBox(height: 12),
 
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 controller: _controller,
                 autofocus: true,
@@ -1782,35 +1787,32 @@ class _SearchBottomSheetState<T extends Object>
 
             Expanded(
               child: _loading
-                  ? const Center(
-                child: CircularProgressIndicator(),
-              )
+                  ? const Center(child: CircularProgressIndicator())
                   : ListView.separated(
-                itemCount: _items.length,
-                separatorBuilder: (_, _) =>
-                const Divider(height: 1),
-                itemBuilder: (_, index) {
-                  final item = _items[index];
+                      itemCount: _items.length,
+                      separatorBuilder: (_, _) => const Divider(height: 1),
+                      itemBuilder: (_, index) {
+                        final item = _items[index];
 
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pop(context, item);
-                    },
-                    child: Container(
-                      height: 50,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        widget.displayText(item),
-                        style: TextStyle(
-                          color: widget.textColor,
-                          fontSize: 13,
-                        ),
-                      ),
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pop(context, item);
+                          },
+                          child: Container(
+                            height: 50,
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              widget.displayText(item),
+                              style: TextStyle(
+                                color: widget.textColor,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),
