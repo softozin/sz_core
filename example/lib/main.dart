@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               ),
               SZTextField(
                 hint: "Test",
-                bgColor: Colors.white,
+                bgColor: Colors.black,
                 borderWidth: 0.1,
                 suffixIcon: Icons.lock,
                 height: 38.h,

@@ -770,6 +770,7 @@ class SZTextField extends StatelessWidget {
     this.maxLines = 1,
     this.minLines,
     this.fontColor = Colors.black,
+    this.iconColor,
     this.textCapitalization = TextCapitalization.none,
     this.contentPadding,
     this.initialValue,
@@ -950,6 +951,9 @@ class SZTextField extends StatelessWidget {
 
   /// Disabled Background color of the textFiled.
   final Color? disabledBgColor;
+
+  /// Icon color of the textFiled.
+  final Color? iconColor;
 
   // ============================================================
   // TEXT FORM FIELD PROPERTIES
@@ -1178,7 +1182,7 @@ class SZTextField extends StatelessWidget {
                 padding: EdgeInsets.only(left: 15.w, right: 5.w),
                 child: Icon(
                   prefixIcon,
-                  color: Colors.blueGrey,
+                  color: iconColor ?? Colors.blueGrey.withValues(alpha: 0.7),
                   size: iconSize ?? ((fontSize ?? 12.sp) * 1.3),
                 ),
               ),
@@ -1191,7 +1195,7 @@ class SZTextField extends StatelessWidget {
                   padding: EdgeInsets.only(left: 5.w, right: 15.w),
                   child: Icon(
                     suffixIcon,
-                    color: Colors.blueGrey,
+                    color: iconColor ?? Colors.blueGrey.withValues(alpha: 0.7),
                     size: iconSize ?? ((fontSize ?? 12.sp) * 1.3),
                   ),
                 ),
