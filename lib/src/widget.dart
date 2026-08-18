@@ -782,6 +782,9 @@ class SZTextField extends StatelessWidget {
     this.isFilled = true,
     this.bgColor = Colors.white,
     this.disabledBgColor,
+    this.borderRadius = 5,
+    this.borderWidth = 1,
+    this.borderRadiusCustom,
 
     // TextFormField properties
     this.groupId = EditableText,
@@ -884,6 +887,15 @@ class SZTextField extends StatelessWidget {
 
   /// Border color of the text field.
   final Color borderColor;
+
+  /// Border Width of the text field.
+  final double borderWidth;
+
+  /// Border Radius of the text field.
+  final double borderRadius;
+
+  /// Border Custom Radius of the text field.
+  final BorderRadius? borderRadiusCustom;
 
   /// Determines whether text selection is enabled.
   final bool isSelection;
@@ -1176,20 +1188,23 @@ class SZTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: isEnable ? borderColor : Colors.blueGrey,
+            width: borderWidth,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
         ),
         border: OutlineInputBorder(
           borderSide: BorderSide(
             color: isEnable ? borderColor : Colors.blueGrey,
+            width: borderWidth,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: isEnable ? borderColor : Colors.blueGrey,
+            width: borderWidth,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: borderRadiusCustom??BorderRadius.circular(borderRadius),
         ),
       ),
 

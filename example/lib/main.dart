@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
               },
               child: Text('COUNT : $count\n\n$text'),
             ),
-            SZTextField(hint: "Test",bgColor: Colors.green,),
+            SZTextField(hint: "Test",bgColor: Colors.green,borderRadius: 25,borderWidth: 0.1,),
           ],
         ),
       ),
