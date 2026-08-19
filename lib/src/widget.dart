@@ -1539,10 +1539,14 @@ class SZAutoComplete<T extends Object> extends StatefulWidget {
     this.dropDownBgColor,
     this.bgColor,
     this.textColor,
+    this.textColorBox,
+    this.textColorList,
     this.borderColor,
     this.width,
     this.height = 48,
     this.fontSize,
+    this.fontSizeList,
+    this.fontSizeBox,
     this.hintText = "-- SELECT --",
   });
 
@@ -1570,11 +1574,23 @@ class SZAutoComplete<T extends Object> extends StatefulWidget {
   /// Text color of the input field and suggestions.
   final Color? textColor;
 
+  /// Text color of the input field and suggestions.
+  final Color? textColorBox;
+
+  /// Text color of the input field and suggestions.
+  final Color? textColorList;
+
   /// Border color of the autocomplete field.
   final Color? borderColor;
 
   /// Font size of the displayed text.
   final double? fontSize;
+
+  /// Font size of the displayed text.
+  final double? fontSizeBox;
+
+  /// Font size of the displayed text.
+  final double? fontSizeList;
 
   /// Width of the autocomplete widget.
   final double? width;
@@ -1623,8 +1639,11 @@ class _SZAutoCompleteState<T extends Object> extends State<SZAutoComplete<T>> {
         displayText: widget.displayText,
         title: widget.hintText,
         text: _controller.text,
-        dropDownBgColor: widget.dropDownBgColor,
-        textColor: widget.textColor,
+        dropDownBgColor: widget.dropDownBgColor ?? widget.bgColor,
+        textColorList: widget.textColorList ?? widget.textColor,
+        textColorBox: widget.textColorBox ?? widget.textColor,
+        fontSizeList: widget.fontSizeList ?? widget.fontSize ?? 12.sp,
+        fontSizeBox: widget.fontSizeBox ?? widget.fontSize ?? 12.sp,
       ),
     );
 
@@ -1693,7 +1712,10 @@ class _SearchBottomSheet<T extends Object> extends StatefulWidget {
   final String title;
   final String text;
   final Color? dropDownBgColor;
-  final Color? textColor;
+  final Color? textColorList;
+  final Color? textColorBox;
+  final double fontSizeBox;
+  final double fontSizeList;
 
   const _SearchBottomSheet({
     required this.onSearch,
@@ -1701,7 +1723,10 @@ class _SearchBottomSheet<T extends Object> extends StatefulWidget {
     required this.title,
     required this.text,
     this.dropDownBgColor,
-    this.textColor,
+    this.textColorList,
+    this.textColorBox,
+    required this.fontSizeBox,
+    required this.fontSizeList,
   });
 
   @override
@@ -1784,6 +1809,10 @@ class _SearchBottomSheetState<T extends Object>
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
+                style: TextStyle(
+                  color: widget.textColorBox,
+                  fontSize: widget.fontSizeBox,
+                ),
               ),
             ),
 
@@ -1809,8 +1838,8 @@ class _SearchBottomSheetState<T extends Object>
                             child: Text(
                               widget.displayText(item),
                               style: TextStyle(
-                                color: widget.textColor,
-                                fontSize: 13,
+                                color: widget.textColorList,
+                                fontSize: widget.fontSizeList,
                               ),
                             ),
                           ),

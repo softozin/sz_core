@@ -266,7 +266,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.1.0"
+    version: "2.1.1"
   term_glyph:
     dependency: transitive
     description:

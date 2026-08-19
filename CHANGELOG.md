@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Update minor changes
+
 ## 2.1.0
 
 - Update minor changes
