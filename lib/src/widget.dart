@@ -1179,7 +1179,7 @@ class SZTextField extends StatelessWidget {
         prefixIcon: prefixIcon == null
             ? null
             : Padding(
-                padding: EdgeInsets.only(left: 15.w, right: 5.w),
+                padding: EdgeInsets.only(left: 10.w, right: 5.w),
                 child: Icon(
                   prefixIcon,
                   color: iconColor ?? Colors.blueGrey.withValues(alpha: 0.7),
@@ -1192,7 +1192,7 @@ class SZTextField extends StatelessWidget {
             : InkWell(
                 onTap: onSuffixTap,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 5.w, right: 15.w),
+                  padding: EdgeInsets.only(left: 5.w, right: 10.w),
                   child: Icon(
                     suffixIcon,
                     color: iconColor ?? Colors.blueGrey.withValues(alpha: 0.7),
